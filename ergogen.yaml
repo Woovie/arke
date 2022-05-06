@@ -1,0 +1,123 @@
+units:
+  lshift: 2.25
+  lshift_bind: ((U * lshift) - U)/2
+  caps: 1.75
+  caps_bind: ((U * caps) - U)/2
+  tab: 1.5
+  tab_bind: ((U * tab) - U)/2
+  rshift: 1.75
+  rshift_bind: ((U * rshift) - U)/2
+  enter: 2.25
+  enter_bind: ((U * enter) - U)/2
+  pipe: 1.5
+  pipe_bind: ((U * pipe) - U)/2
+  twooffset: 0.25
+  angle: -12
+  
+points:
+  zones:
+    mods:
+      key:
+        asym: left
+      columns:
+        one:
+      rows:
+        lshift:
+          width: lshift
+          bind: [1,lshift_bind,1,lshift_bind]
+        caps:
+          width: caps
+          bind: [1,caps_bind,1,caps_bind]
+        tab:
+          width: tab
+          bind: [1,tab_bind,1,tab_bind]
+        esc:
+    modsright:
+      key:
+        asym: right
+      columns:
+        one:
+      rows:
+        rshift:
+          width: rshift
+          shift: [-((U * (rshift-lshift))) / 2, 0]
+          bind: [1,rshift_bind,1,rshift_bind]
+        enter:
+          width: enter
+          shift: [-((U * (enter-caps))) / 2, 0]
+          bind: [1,enter_bind,1,enter_bind]
+        pipe:
+          width: pipe
+          bind: [1,pipe_bind,1,pipe_bind]
+        four:
+    fnright:
+      anchor:
+        ref: modsright_one_rshift
+        shift: [-((U * rshift) + U) / 2, 0]
+      key:
+        asym: right
+      columns:
+        one:
+      rows:
+        one:
+    firstalpha:
+      anchor:
+        ref: mods_one_lshift
+        shift: [U, 0]
+      columns:
+        one:
+      rows:
+        one:
+          shift: [((U * lshift) - U) / 2, 0]
+        two:
+          shift: [((U * caps) - U) / 2, 0]
+        three:
+          shift: [((U * tab) - U) / 2, 0]
+        four:
+    two:
+      anchor:
+        ref: firstalpha_one_four
+        shift: [U, (U * twooffset)]
+      columns:
+        one:
+      rows:
+        one:
+          bind: [1,1,55,1]
+    alphacluster:
+      anchor:
+        ref: firstalpha_one_two
+        shift: [U, -(U * 0.5)]
+      columns:
+        one:
+        two:
+        three:
+        four:
+      rows:
+        one:
+          shift: [U * 0.3, 0]
+        two:
+          shift: [-(U * 0.15), 0]
+        three:
+          shift: [-(U * 0.5), 0]
+        four:
+      rotate: angle
+    bars:
+      anchor:
+        ref: alphacluster_four_one
+        shift: [-U, -U]
+      columns:
+        one:
+      rows:
+        one:
+          width: 3
+  key:
+    bind: 1
+  mirror:
+    ref: mods_one_lshift
+    distance: 275
+outlines:
+  exports:
+    outer:
+      - type: keys
+        side: both
+        size: U
