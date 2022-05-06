@@ -12,7 +12,10 @@ units:
   pipe: 1.5
   pipe_bind: ((U * pipe) - U)/2
   twooffset: 0.25
-  angle: -12
+  bar: 3
+  bar_bind: ((U * bar) - U)/2
+  outlineoffset: 10
+  angle: -10
   
 points:
   zones:
@@ -24,13 +27,13 @@ points:
       rows:
         lshift:
           width: lshift
-          bind: [1,lshift_bind,1,lshift_bind]
+          bind: [0,lshift_bind,0,lshift_bind]
         caps:
           width: caps
-          bind: [1,caps_bind,1,caps_bind]
+          bind: [0,caps_bind,0,caps_bind]
         tab:
           width: tab
-          bind: [1,tab_bind,1,tab_bind]
+          bind: [0,tab_bind,0,tab_bind]
         esc:
     modsright:
       key:
@@ -41,15 +44,15 @@ points:
         rshift:
           width: rshift
           shift: [-((U * (rshift-lshift))) / 2, 0]
-          bind: [1,rshift_bind,1,rshift_bind]
+          bind: [0,rshift_bind,0,rshift_bind]
         enter:
           width: enter
           shift: [-((U * (enter-caps))) / 2, 0]
-          bind: [1,enter_bind,1,enter_bind]
+          bind: [0,enter_bind,0,enter_bind]
         pipe:
           width: pipe
-          bind: [1,pipe_bind,1,pipe_bind]
-        four:
+          bind: [0,pipe_bind,0,pipe_bind]
+        bs:
     fnright:
       anchor:
         ref: modsright_one_rshift
@@ -69,7 +72,7 @@ points:
       rows:
         one:
           shift: [lshift_bind, 0]
-          bind: [15, 1]
+          bind: [15, 0]
         two:
           shift: [((U * caps) - U) / 2, 0]
         three:
@@ -83,7 +86,7 @@ points:
         one:
       rows:
         one:
-          bind: [1,1,55,1]
+          bind: [0,0,55,0]
     alphacluster:
       anchor:
         ref: firstalpha_one_two
@@ -101,7 +104,7 @@ points:
         three:
           shift: [-(U * 0.5), 0]
         four:
-          bind: [1,1,1,5]
+          bind: [0,0,0,5]
       rotate: angle
     bars:
       anchor:
@@ -111,15 +114,53 @@ points:
         one:
       rows:
         one:
-          width: 3
-  key:
-    bind: 1
+          width: bar
+          bind: [bar_bind,0]
   mirror:
     ref: mods_one_lshift
     distance: 275
 outlines:
   exports:
-    outer:
-      - type: keys
+    key_outline:
+      main:
+        type: keys
         side: both
         size: U
+    case_outline:
+      left:
+        type: polygon
+        points:
+          - ref: mods_one_esc
+            shift: [-(U/2)-outlineoffset, (U*0.75)+outlineoffset]
+          - ref: mods_one_lshift
+            shift: [-((lshift*U)/2)-outlineoffset, -(U/2)-outlineoffset]
+          - ref: bars_one_one
+            shift: [-(U*2.25)-outlineoffset, -(U/2)-outlineoffset]
+          - ref: bars_one_one
+            shift: [(U*1.5)+outlineoffset, -(U/2)-outlineoffset]
+          - ref: bars_one_one
+            shift: [(U*1.5)+outlineoffset, (U*1.5)+outlineoffset]
+          - ref: alphacluster_four_four
+            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
+          - ref: two_one_one
+            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
+      right:
+        type: polygon
+        points:
+          - ref: mirror_modsright_one_bs
+            shift: [-(U/2)-outlineoffset, (U*0.75)+outlineoffset]
+          - ref: mirror_fnright_one_one
+            shift: [-(U/2)-outlineoffset, -(U/2)-outlineoffset]
+          - ref: mirror_bars_one_one
+            shift: [-(U*2.25)-outlineoffset, -(U/2)-outlineoffset]
+          - ref: mirror_bars_one_one
+            shift: [(U*1.5)+outlineoffset, -(U/2)-outlineoffset]
+          - ref: mirror_bars_one_one
+            shift: [(U*1.5)+outlineoffset, (U*1.5)+outlineoffset]
+          - ref: mirror_alphacluster_four_four
+            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
+          - ref: mirror_two_one_one
+            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
+    case:
+      - +key_outline
+      - ^case_outline
