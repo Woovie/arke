@@ -68,7 +68,8 @@ points:
         one:
       rows:
         one:
-          shift: [((U * lshift) - U) / 2, 0]
+          shift: [lshift_bind, 0]
+          bind: [15, 1]
         two:
           shift: [((U * caps) - U) / 2, 0]
         three:
@@ -100,6 +101,7 @@ points:
         three:
           shift: [-(U * 0.5), 0]
         four:
+          bind: [1,1,1,5]
       rotate: angle
     bars:
       anchor:
