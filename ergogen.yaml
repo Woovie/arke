@@ -1,166 +1,504 @@
 units:
-  lshift: 2.25
-  lshift_bind: ((U * lshift) - U)/2
-  caps: 1.75
-  caps_bind: ((U * caps) - U)/2
-  tab: 1.5
-  tab_bind: ((U * tab) - U)/2
-  rshift: 1.75
-  rshift_bind: ((U * rshift) - U)/2
-  enter: 2.25
-  enter_bind: ((U * enter) - U)/2
-  pipe: 1.5
-  pipe_bind: ((U * pipe) - U)/2
-  twooffset: 0.25
-  bar: 3
-  bar_bind: ((U * bar) - U)/2
-  outlineoffset: 10
-  angle: -10
-  
+  u: U
+  $default_width: u
+  $default_height: u
+  $default_autobind: 11
+  mod_r4: 2.25 * u
+  mod_r3: 1.75 * u
+  mod_r2: 1.5 * u
+  bar: 3 * u
+  angle: -6
+  case_top_size: 20
+  switch_cutout: 14
+  plate_min: 2
+  r4: 5.5
+  r3: -7
+  r2: -4
+  r1: 12
+
 points:
   zones:
-    mods:
+    lmods:
+      columns:
+        c1:
+      rows:
+        r4:
+          width: mod_r4
+          bind: [(mod_r4-u)/2, 0]
+          tags:
+            2ustab: true
+        r3:
+          width: mod_r3
+          bind: [(mod_r3-u)/2, 0]
+        r2:
+          width: mod_r2
+          bind: [(mod_r2-u)/2, 0]
+        r1:
       key:
+        tags:
+          keys: true
         asym: left
+    rmods:
       columns:
-        one:
+        c1:
       rows:
-        lshift:
-          width: lshift
-          bind: [0,lshift_bind,0,lshift_bind]
-        caps:
-          width: caps
-          bind: [0,caps_bind,0,caps_bind]
-        tab:
-          width: tab
-          bind: [0,tab_bind,0,tab_bind]
-        esc:
-    modsright:
+        r4:
+          width: mod_r4
+          bind: [(mod_r4-u)/2, 0]
+          tags:
+            2ustab: true
+        r3:
+          width: mod_r3
+          bind: [(mod_r3-u)/2, 0]
+        r2:
+          width: mod_r2
+          bind: [(mod_r2-u)/2, 0]
+        r1:
       key:
+        tags:
+          keys: true
         asym: right
+    right_mods_compat:
       columns:
-        one:
-      rows:
-        rshift:
-          width: rshift
-          shift: [-((U * (rshift-lshift))) / 2, 0]
-          bind: [0,rshift_bind,0,rshift_bind]
-        enter:
-          width: enter
-          shift: [-((U * (enter-caps))) / 2, 0]
-          bind: [0,enter_bind,0,enter_bind]
-        pipe:
-          width: pipe
-          bind: [0,pipe_bind,0,pipe_bind]
-        bs:
-    fnright:
-      anchor:
-        ref: modsright_one_rshift
-        shift: [-((U * rshift) + U) / 2, 0]
+        c1:
+          rows:
+            r1:
+              shift: [(u*1.25)/2, 0]
+              bind: [0, 0]
+        c2:
+          rows:
+            r1:
+              width: 1.25*u
+              shift: [-u*1.5, 0]
+              bind: [0, 0]
       key:
+        tags:
+          keys: true
         asym: right
-      columns:
-        one:
-      rows:
-        one:
-    firstalpha:
+    c2:
       anchor:
-        ref: mods_one_lshift
-        shift: [U, 0]
+        ref: lmods_c1_r4
+        shift: [(u/2)+(mod_r4/2), 0]
       columns:
-        one:
+        c1:
       rows:
-        one:
-          shift: [lshift_bind, 0]
-          bind: [15, 0]
-        two:
-          shift: [((U * caps) - U) / 2, 0]
-        three:
-          shift: [((U * tab) - U) / 2, 0]
-        four:
+        r4:
+          bind: [10, 10, 0, 0]
+        r3:
+          shift: [-0.25*u, 0]
+        r2:
+          shift: [-0.125*u, 0]
+        r1:
+          shift: [-0.25*u, 0]
+      key:
+        tags:
+          keys: true
     two:
       anchor:
-        ref: firstalpha_one_four
-        shift: [U, (U * twooffset)]
-      columns:
-        one:
-      rows:
-        one:
-          bind: [0,0,55,0]
-    alphacluster:
+        ref: c2_c1_r1
+        shift: [u, 1]
+      key:
+        bind: [0, 0, 11, 0]
+        tags:
+          keys: true
+    alphas_cluster:
       anchor:
-        ref: firstalpha_one_two
-        shift: [U, -(U * 0.5)]
+        ref: c2_c1_r3
+        shift: [u, -u-(u*0.0625)]
+        rotate: angle
       columns:
         one:
         two:
         three:
         four:
       rows:
-        one:
-          shift: [U * 0.3, 0]
-        two:
-          shift: [-(U * 0.15), 0]
-        three:
-          shift: [-(U * 0.5), 0]
-        four:
-          bind: [0,0,0,5]
-      rotate: angle
+        r4:
+          shift: [r4, 1]
+          bind: [0, 0, 0, 4]
+        r3:
+          shift: [r3, 0]
+          bind: [0, 0, 0, 4]
+        r2:
+          shift: [r2, 0]
+        r1:
+          shift: [r1, 0]
+          bind: [0, 0, 0, 4]
+      key:
+        bind: [0, 0, 0, 0]
+        tags:
+          keys: true
     bars:
       anchor:
-        ref: alphacluster_four_one
-        shift: [-U, -U]
+        ref: alphas_cluster_four_r4
+        shift: [-u, -u]
+      key:
+        width: bar
+        bind: [0, (bar/2)-(u/2), 0, (bar/2)-(u/2)]
+        tags:
+          keys: true
+          3ustab: true
+    indicator_leds:
+      anchor:
+        ref: alphas_cluster_four_r1
+        shift: [u/1.5+1, -u*(1/3)]
+        rotate: 90
       columns:
         one:
-      rows:
-        one:
-          width: bar
-          bind: [bar_bind,0]
+        two:
+        three:
+      key:
+        tags:
+          leds: true
+        spread: u/3
+        asym: left
   mirror:
-    ref: mods_one_lshift
-    distance: 275
+    ref: alphas_cluster_four_r4
+    distance: 100
 outlines:
-  exports:
+  case_top:
     key_outline:
-      main:
-        type: keys
-        side: both
-        size: U
-    case_outline:
-      left:
-        type: polygon
-        points:
-          - ref: mods_one_esc
-            shift: [-(U/2)-outlineoffset, (U*0.75)+outlineoffset]
-          - ref: mods_one_lshift
-            shift: [-((lshift*U)/2)-outlineoffset, -(U/2)-outlineoffset]
-          - ref: bars_one_one
-            shift: [-(U*2.25)-outlineoffset, -(U/2)-outlineoffset]
-          - ref: bars_one_one
-            shift: [(U*1.5)+outlineoffset, -(U/2)-outlineoffset]
-          - ref: bars_one_one
-            shift: [(U*1.5)+outlineoffset, (U*1.5)+outlineoffset]
-          - ref: alphacluster_four_four
-            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
-          - ref: two_one_one
-            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
-      right:
-        type: polygon
-        points:
-          - ref: mirror_modsright_one_bs
-            shift: [-(U/2)-outlineoffset, (U*0.75)+outlineoffset]
-          - ref: mirror_fnright_one_one
-            shift: [-(U/2)-outlineoffset, -(U/2)-outlineoffset]
-          - ref: mirror_bars_one_one
-            shift: [-(U*2.25)-outlineoffset, -(U/2)-outlineoffset]
-          - ref: mirror_bars_one_one
-            shift: [(U*1.5)+outlineoffset, -(U/2)-outlineoffset]
-          - ref: mirror_bars_one_one
-            shift: [(U*1.5)+outlineoffset, (U*1.5)+outlineoffset]
-          - ref: mirror_alphacluster_four_four
-            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
-          - ref: mirror_two_one_one
-            shift: [(U*0.5)+outlineoffset, (U*0.5)+outlineoffset]
-    case:
-      - +key_outline
-      - ^case_outline
+      operation: add
+      what: rectangle
+      size: [u, u]
+      where: keys
+      bound: true
+    left_body:
+      operation: stack
+      what: rectangle
+      size: [u*9, u*9]
+      where: bars
+      adjust:
+        shift: [-u*2, u]
+    right_body:
+      operation: stack
+      what: rectangle
+      size: [u*9, u*9]
+      where: mirror_bars
+      adjust:
+        shift: [-u*2, u]
+    body_trimmer:
+      operation: subtract
+      what: rectangle
+      mirror: false
+      size: [500, 20]
+      adjust:
+        ref: lmods_c1_r1
+        shift: [150, u*2]
+    leds:
+      operation: stack
+      what: circle
+      radius: 1
+      where: leds
+  plate_outline:
+    left:
+      operation: stack
+      what: polygon
+      mirror: false
+      points:
+        - ref: alphas_cluster_four_r4
+          shift: [u/2, -u*1.5]
+        - shift: [0, u*2]
+        - shift: [r3, 0]
+        - shift: [0, u]
+        - shift: [r2, 0]
+        - shift: [0, u]
+        - ref: alphas_cluster_four_r1
+          shift: [u/2, -u/2]
+        - ref: alphas_cluster_four_r1
+          shift: [u/2, u/2]
+        - ref: alphas_cluster_one_r1
+          shift: [-(u/2), u/2]
+        - ref: two
+          shift: [u/2, u/2]
+        - ref: two
+          shift: [-(u/2), u/2]
+        - ref: c2_c1_r1
+          shift: [u/2, u/2]
+        - ref: lmods_c1_r1
+          shift: [-(u/2), u/2]
+        - shift: [0, -u]
+        - shift: [-(u*0.25), 0]
+        - shift: [0, -u]
+        - shift: [-(u*0.125), 0]
+        - shift: [0, -u]
+        - shift: [-(u*0.25), 0]
+        - ref: lmods_c1_r4
+          shift: [-(mod_r4/2), -(u/2)]
+        - ref: c2_c1_r4
+          shift: [(u/2), -(u/2)]
+        - orient: angle
+          shift: [u, 0]
+        - ref: bars
+          shift: [-(u*1.5), -(u/2)]
+    right:
+      operation: stack
+      what: polygon
+      mirror: false
+      points:
+        - ref: mirror_alphas_cluster_four_r4
+          shift: [u/2, -u*1.5]
+        - shift: [0, u*2]
+        - shift: [r3, 0]
+        - shift: [0, u]
+        - shift: [r2, 0]
+        - shift: [0, u]
+        - ref: mirror_alphas_cluster_four_r1
+          shift: [u/2, -u/2]
+        - ref: mirror_alphas_cluster_four_r1
+          shift: [u/2, u/2]
+        - ref: mirror_alphas_cluster_one_r1
+          shift: [-(u/2), u/2]
+        - ref: mirror_two
+          shift: [u/2, u/2]
+        - ref: mirror_two
+          shift: [-(u/2), u/2]
+        - ref: mirror_c2_c1_r1
+          shift: [u/2, u/2]
+        - ref: mirror_rmods_c1_r1
+          shift: [-(u/2), u/2]
+        - shift: [0, -u]
+        - shift: [-(0.25*u), 0]
+        - shift: [0, -u]
+        - shift: [-(0.125*u), 0]
+        - shift: [0, -u]
+        - shift: [-(0.25*u), 0]
+        - ref: mirror_rmods_c1_r4
+          shift: [-(mod_r4/2), -(u/2)]
+        - ref: mirror_c2_c1_r4
+          shift: [(u/2), -(u/2)]
+        - shift: [u, 0]
+          orient: angle
+        - ref: mirror_bars
+          shift: [-(u*1.5), -(u/2)]
+  cutouts:
+    key_cutouts:
+      operation: add
+      what: rectangle
+      size: 14
+      bound: false
+      where: keys
+  plate_tab_outline:
+    left_rect_fix:
+      operation: stack
+      what: polygon
+      points:
+        - shift: [0, 0]
+        - shift: [4.75, 0]
+        - shift: [0, 3]
+        - shift: [-3, 0]
+          orient: -15
+        - shift: [-3.25, 0]
+          orient: 90
+    right_rect_fix:
+      operation: add
+      what: polygon
+      points:
+        - shift: [9.5, 0]
+        - shift: [-4.75, 0]
+        - shift: [0, 3]
+        - shift: [3, 0]
+          orient: 15
+        - shift: [-3.25, 0]
+          orient: 90
+    main_circle:
+      operation: add
+      what: circle
+      radius: 3
+      adjust:
+        shift: [4.75, 3]
+    left_sphere:
+      operation: subtract
+      what: circle
+      radius: 1
+      adjust:
+        shift: [0, 1]
+    right_sphere:
+      operation: subtract
+      what: circle
+      radius: 1
+      adjust:
+        shift: [9.5, 1]
+  plate_tab:
+    tab:
+      name: plate_tab_outline
+      operation: stack
+    hole:
+      operation: subtract
+      what: circle
+      radius: 1.5
+      adjust:
+        shift: [4.75, 3]
+
+  topmount_cutout:
+    - name: plate_outline
+      operation: stack
+      expand: 1
+
+    - operation: stack
+      what: circle
+      radius: 3
+      where: indicator_leds_one
+    - operation: stack
+      what: circle
+      radius: 3
+      where: indicator_leds_three
+    - operation: add
+      what: rectangle
+      size: [(u*1/3)*2, 6]
+      where: indicator_leds_two
+    - operation: add
+      what: rectangle
+      size: [(u*1/3)*2+6, 4]
+      where: indicator_leds_two
+      adjust:
+        shift: [0, 2]
+
+    - name: plate_tab_outline
+      operation: add
+      where: lmods_c1_r1
+      adjust:
+        shift: [-((((u)/2))-1), (u/2)+1]
+    - name: plate_tab_outline
+      operation: add
+      where: lmods_c1_r4
+      adjust:
+        shift: [-((((u*2.25)/2))-1)+9.5, -(u/2)-1]
+        rotate: 180
+    - name: plate_tab_outline
+      operation: add
+      where: alphas_cluster_four_r1
+      adjust:
+        shift: [(u/2)-9.5-1, (u/2)+1]
+    - name: plate_tab_outline
+      operation: add
+      where: bars
+      adjust:
+        shift: [(u*1.5)-1, -(u/2)-1]
+        rotate: 180
+
+    - name: plate_tab_outline
+      operation: add
+      where: mirror_rmods_c1_r1
+      adjust:
+        shift: [1, (u/2)+1]
+    - name: plate_tab_outline
+      operation: add
+      where: mirror_rmods_c1_r4
+      adjust:
+        shift: [-((((u*2.25)/2))-1), -(u/2)-1]
+        rotate: 180
+    - name: plate_tab_outline
+      operation: add
+      where: mirror_alphas_cluster_four_r1
+      adjust:
+        shift: [(u/2)-1, (u/2)+1]
+    - name: plate_tab_outline
+      operation: add
+      where: mirror_bars
+      adjust:
+        shift: [(u*1.5)-9.5-1, -(u/2)-1]
+        rotate: 180
+
+  plate:
+    - name: plate_outline
+      operation: stack
+      expand: 1
+    - name: cutouts
+      operation: stack
+      fillet: 0.5
+
+    - name: plate_tab
+      operation: add
+      where: lmods_c1_r1
+      adjust:
+        shift: [-((((u)/2))-1), (u/2)+1]
+    - name: plate_tab
+      operation: add
+      where: lmods_c1_r4
+      adjust:
+        shift: [-((((u*2.25)/2))-1)+9.5, -(u/2)-1]
+        rotate: 180
+    - name: plate_tab
+      operation: add
+      where: alphas_cluster_four_r1
+      adjust:
+        shift: [(u/2)-9.5-1, (u/2)+1]
+    - name: plate_tab
+      operation: add
+      where: bars
+      adjust:
+        shift: [(u*1.5)-1, -(u/2)-1]
+        rotate: 180
+
+    - name: plate_tab
+      operation: add
+      where: mirror_rmods_c1_r1
+      adjust:
+        shift: [1, (u/2)+1]
+    - name: plate_tab
+      operation: add
+      where: mirror_rmods_c1_r4
+      adjust:
+        shift: [-((((u*2.25)/2))-1), -(u/2)-1]
+        rotate: 180
+    - name: plate_tab
+      operation: add
+      where: mirror_alphas_cluster_four_r1
+      adjust:
+        shift: [(u/2)-1, (u/2)+1]
+    - name: plate_tab
+      operation: add
+      where: mirror_bars
+      adjust:
+        shift: [(u*1.5)-9.5-1, -(u/2)-1]
+        rotate: 180
+
+    - operation: subtract
+      what: polygon
+      points:
+        - shift: [-8.44, -7.8]
+        - shift: [-7, 0]
+        - shift: [0, 14]
+        - shift: [7, 0]
+      bound: false
+      where: 2ustab
+    - operation: subtract
+      what: polygon
+      points:
+        - shift: [8.44, -7.8]
+        - shift: [7, 0]
+        - shift: [0, 14]
+        - shift: [-7, 0]
+      bound: false
+      where: 2ustab
+    - operation: stack
+      what: polygon
+      points:
+        - shift: [u-3.5, -7.8]
+        - shift: [7, 0]
+        - shift: [0, 14]
+        - shift: [-7, 0]
+      bound: false
+      where: 3ustab
+    - operation: stack
+      what: polygon
+      points:
+        - shift: [-u-3.5, -7.8]
+        - shift: [7, 0]
+        - shift: [0, 14]
+        - shift: [-7, 0]
+      bound: false
+      where: 3ustab
+
+  body_extrude:
+    - name: topmount_cutout
+      operation: stack
+      expand: 1
+    - name: case_top
+      operation: stack
+
+  plate_and_body:
+    - name: body_extrude
+      operation: stack
+    - name: plate
+      operation: stack
