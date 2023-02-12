@@ -177,6 +177,7 @@ points:
   mirror:
     ref: alphas_cluster_four_r4
     distance: 100
+
 outlines:
   case_top:
     key_outline:
@@ -202,7 +203,6 @@ outlines:
     body_trimmer:
       operation: subtract
       what: rectangle
-      mirror: false
       size: [500, 20]
       adjust:
         ref: lmods_c1_r1
@@ -216,7 +216,6 @@ outlines:
     left:
       operation: stack
       what: polygon
-      mirror: false
       points:
         - ref: alphas_cluster_four_r4
           shift: [u/2, -u*1.5]
@@ -256,7 +255,6 @@ outlines:
     right:
       operation: stack
       what: polygon
-      mirror: false
       points:
         - ref: mirror_alphas_cluster_four_r4
           shift: [u/2, -u*1.5]
